@@ -51,7 +51,7 @@ Entitas data yang dibutuhkan untuk membangun basis data ini meliputi:
 ### 6. Diagram Proses (Use Case/Flowchart) 
 
  
-### 7. Pembagian Tugas Anggota 
+### 6. Pembagian Tugas Anggota 
 * **Restu:** Menyusun Deskripsi studi kasus, membuat dan mengelola repository GitHub kelompok, serta merapikan Pembagian tugas anggota. 
 * **Almand:** Menyusun Latar belakang dan tujuan sistem.  
 * **Ando:** Menganalisis Identifikasi aktor dan membuat Diagram proses (Use Case/Flowchart).  
