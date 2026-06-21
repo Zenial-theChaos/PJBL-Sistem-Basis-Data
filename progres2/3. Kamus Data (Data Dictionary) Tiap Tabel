@@ -1,1 +1,84 @@
+# Sistem Inventaris Laboratorium - Data Dictionary
 
+Berikut adalah kamus data untuk basis data sistem peminjaman barang laboratorium.
+
+## Tabel `kategorii_barang`
+(Tabel referensi kategori barang)
+
+| Kolom | Tipe Data | Null | Kunci | Deskripsi |
+| :--- | :--- | :--- | :--- | :--- |
+| **id_kategori** | int | No | PK | ID unik kategori |
+| **nama_kategori** | varchar(50) | No | - | Nama kategori (misal: Elektronik, Kimia) |
+
+---
+
+## Tabel `anggota`
+(Tabel peminjam barang)
+
+| Kolom | Tipe Data | Null | Kunci | Deskripsi |
+| :--- | :--- | :--- | :--- | :--- |
+| **id_anggota** | varchar(20) | No | PK | ID unik anggota (NIM/NIP) |
+| **nama** | varchar(100) | No | - | Nama lengkap anggota |
+| **jenis_anggota** | varchar(20) | No | - | Jenis keanggotaan |
+| **kontak** | varchar(50) | Yes | - | Kontak (telp/email) |
+
+---
+
+## Tabel `laboran`
+(Tabel petugas laboratorium)
+
+| Kolom | Tipe Data | Null | Kunci | Deskripsi |
+| :--- | :--- | :--- | :--- | :--- |
+| **id_laboran** | int | No | PK | ID unik laboran |
+| **nama** | varchar(100) | No | - | Nama lengkap laboran |
+| **kontak** | varchar(50) | Yes | - | Kontak laboran |
+
+---
+
+## Tabel `barang`
+(Tabel inventaris barang)
+
+| Kolom | Tipe Data | Null | Kunci | Deskripsi |
+| :--- | :--- | :--- | :--- | :--- |
+| **id_barang** | int | No | PK | ID unik barang |
+| **nama_barang** | varchar(100) | No | - | Nama barang |
+| **spesifikasi** | text | Yes | - | Spesifikasi teknis |
+| **stok** | int | No | - | Jumlah stok tersedia |
+| **id_kategori** | int | No | FK | Merujuk ke `kategorii_barang` |
+
+---
+
+## Tabel `transaksi_peminjaman`
+(Tabel header peminjaman)
+
+| Kolom | Tipe Data | Null | Kunci | Deskripsi |
+| :--- | :--- | :--- | :--- | :--- |
+| **id_transaksi** | int | No | PK | ID unik transaksi |
+| **id_anggota** | varchar(20) | No | FK | Merujuk ke `anggota` |
+| **id_laboran** | int | No | FK | Merujuk ke `laboran` |
+| **tanggal_pinjaman** | date | No | - | Tanggal pinjam |
+| **tanggal_kembali** | date | Yes | - | Tanggal kembali (NULL jika belum) |
+| **status** | varchar(20) | No | - | Status transaksi |
+
+---
+
+## Tabel `detail_transaksi`
+(Tabel detail barang yang dipinjam)
+
+| Kolom | Tipe Data | Null | Kunci | Deskripsi |
+| :--- | :--- | :--- | :--- | :--- |
+| **id_detail** | int | No | PK | ID unik detail |
+| **id_transaksi** | int | No | FK | Merujuk ke `transaksi_peminjaman` |
+| **id_barang** | int | No | FK | Merujuk ke `barang` |
+| **jumlah** | int | No | - | Jumlah barang dipinjam |
+| **kondisi_kembali** | varchar(50) | Yes | - | Kondisi saat dikembalikan |
+
+---
+
+## Relasi Antar Tabel
+
+- `barang` → `kategorii_barang` (many-to-one)
+- `transaksi_peminjaman` → `anggota` (many-to-one)
+- `transaksi_peminjaman` → `laboran` (many-to-one)
+- `detail_transaksi` → `transaksi_peminjaman` (many-to-one)
+- `detail_transaksi` → `barang` (many-to-one)
