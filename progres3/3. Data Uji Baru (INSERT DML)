@@ -1,26 +1,26 @@
--- Insert Kategori Barang
+1 Insert Kategori Barang
 INSERT INTO kategori_barang (nama_kategori) VALUES 
 ('Optik'),
 ('Kaca'),
 ('Elektronik');
 
--- Insert Anggota (Fikri & Ramlan menggunakan NIM, Almand menggunakan NIDN baru)
+2 Insert Anggota (Fikri & Ramlan menggunakan NIM, Almand menggunakan NIDN baru)
 INSERT INTO anggota (id_anggota, nama, jenis_anggota, kontak) VALUES
 ('2501020109', 'Fikri Restu Nugraha', 'Mahasiswa', '0811223344'),
 ('0414118902', 'Almand Zaky S.', 'Dosen', '0822334455'),
 ('2501020102', 'Ramlan Leonardo Napitupulu', 'Mahasiswa', '0833445566');
 
--- Insert Laboran (Virtuando menggunakan format NIP 18 Digit baru)
+3 Insert Laboran (Virtuando menggunakan format NIP 18 Digit baru)
 INSERT INTO laboran (id_laboran, nama, kontak) VALUES 
 ('199810252024011003', 'Virtuando Jagad Saputrana', '0899887766');
 
--- Insert Barang
+4 Insert Barang
 INSERT INTO barang (nama_barang, spesifikasi, stok, id_kategori) VALUES
 ('Mikroskop', '1000x Zoom', 5, 1),
 ('Gelas Ukur', '50ml', 20, 2),
 ('Multimeter', 'Digital', 10, 3);
 
--- Insert Transaksi Peminjaman (Menggunakan NIP Laboran '199810252024011003')
+5 Insert Transaksi Peminjaman (Menggunakan NIP Laboran '199810252024011003')
 -- Transaksi 1: Fikri Restu (Mahasiswa) meminjam
 INSERT INTO transaksi_peminjaman (id_anggota, id_laboran, tanggal_pinjam, tanggal_kembali, status) VALUES
 ('2501020109', '199810252024011003', '2026-06-20', '2026-06-21', 'Selesai');
