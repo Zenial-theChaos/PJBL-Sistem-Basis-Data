@@ -1,10 +1,10 @@
--- 1. Menampilkan daftar seluruh barang beserta stok saat ini
+1. Menampilkan daftar seluruh barang beserta stok saat ini
 SELECT nama_barang, spesifikasi, stok FROM barang;
 
--- 2. Menampilkan profil seluruh anggota peminjam (Terlihat bedanya NIM dan NIDN)
+2. Menampilkan profil seluruh anggota peminjam (Terlihat bedanya NIM dan NIDN)
 SELECT id_anggota AS nim_atau_nidn, nama, jenis_anggota, kontak FROM anggota;
 
--- 3. Menampilkan daftar barang yang berstatus sedang dipinjam (Belum Kembali)
+3. Menampilkan daftar barang yang berstatus sedang dipinjam (Belum Kembali)
 SELECT tp.id_transaksi, a.id_anggota AS id_peminjam, a.nama AS nama_peminjam, b.nama_barang, dt.jumlah
 FROM detail_transaksi dt
 JOIN transaksi_peminjaman tp ON dt.id_transaksi = tp.id_transaksi
@@ -12,39 +12,39 @@ JOIN anggota a ON tp.id_anggota = a.id_anggota
 JOIN barang b ON dt.id_barang = b.id_barang
 WHERE tp.status = 'Dipinjam';
 
--- 4. Laporan riwayat transaksi peminjaman di bulan Juni 2026
+4. Laporan riwayat transaksi peminjaman di bulan Juni 2026
 SELECT id_transaksi, id_anggota, id_laboran AS nip_laboran, tanggal_pinjam, tanggal_kembali, status 
 FROM transaksi_peminjaman 
 WHERE tanggal_pinjam BETWEEN '2026-06-01' AND '2026-06-30';
 
--- 5. Menampilkan barang yang berada di bawah kategori 'Elektronik'
+5. Menampilkan barang yang berada di bawah kategori 'Elektronik'
 SELECT b.nama_barang, b.stok, k.nama_kategori 
 FROM barang b
 JOIN kategori_barang k ON b.id_kategori = k.id_kategori
 WHERE k.nama_kategori = 'Elektronik';
 
--- 6. Menghitung jumlah total transaksi yang ditangani oleh Laboran 'Virtuando Jagad Saputrana'
+6. Menghitung jumlah total transaksi yang ditangani oleh Laboran 'Virtuando Jagad Saputrana'
 SELECT l.id_laboran AS nip, l.nama AS nama_laboran, COUNT(tp.id_transaksi) AS total_transaksi_ditangani
 FROM transaksi_peminjaman tp
 JOIN laboran l ON tp.id_laboran = l.id_laboran
 WHERE l.nama LIKE '%Virtuando%';
 
--- 7. Menampilkan jumlah item barang yang dipinjam pada setiap transaksi (GROUP BY)
+7. Menampilkan jumlah item barang yang dipinjam pada setiap transaksi (GROUP BY)
 SELECT id_transaksi, COUNT(id_barang) AS variasi_barang, SUM(jumlah) AS total_pcs_barang
 FROM detail_transaksi
 GROUP BY id_transaksi;
 
--- 8. Menampilkan data anggota yang belum pernah melakukan peminjaman sama sekali (Mendeteksi Ramlan)
+8. Menampilkan data anggota yang belum pernah melakukan peminjaman sama sekali (Mendeteksi Ramlan)
 SELECT a.id_anggota AS nim, a.nama, a.jenis_anggota
 FROM anggota a
 LEFT JOIN transaksi_peminjaman tp ON a.id_anggota = tp.id_anggota
 WHERE tp.id_transaksi IS NULL;
 
--- 9. Subquery: Menampilkan detail barang yang pernah dipinjam dengan kondisi kembali 'Baik'
+9. Subquery: Menampilkan detail barang yang pernah dipinjam dengan kondisi kembali 'Baik'
 SELECT nama_barang, spesifikasi FROM barang
 WHERE id_barang IN (
     SELECT id_barang FROM detail_transaksi WHERE kondisi_kembali = 'Baik'
 );
 
--- 10. Mengurutkan aset laboratorium berdasarkan jumlah stok terbanyak ke tersedikit
+10. Mengurutkan aset laboratorium berdasarkan jumlah stok terbanyak ke tersedikit
 SELECT nama_barang, stok FROM barang ORDER BY stok DESC;
